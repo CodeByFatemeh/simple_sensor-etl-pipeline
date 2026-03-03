@@ -1,0 +1,3 @@
+CREATE DATABASE sensor_db;
+-- GRANT ALL PRIVILEGES ON DATABASE sensor_db TO airflow;
+ALTER DATABASE sensor_db OWNER TO airflow;

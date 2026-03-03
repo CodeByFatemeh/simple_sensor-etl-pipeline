@@ -1,0 +1,21 @@
+# Database storage (IMPORTANT: never push this)
+db_data/
+postgres_data/
+
+# Python environment
+venv/
+.venv/
+env/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Airflow
+logs/
+airflow/
+airflow-*.log
+airflow.db
+standalone_admin_password.txt
+
+# OS files
+.DS_Store
