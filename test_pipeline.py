@@ -1,9 +1,12 @@
 import pytest
 import pandas as pd
 import numpy as np
+import os
 from sqlalchemy import create_engine
 
 from dags.sensor_processing import clean_sensor_data_logic
+
+IN_GITHUB_ACTIONS = os.getenv("GITHUB_ACTIONS") == "true"
 
 # 1. Unit Test: testing the cleaning logic for outliers and missing values without connecting to the database
 def test_clean_sensor_logic():
@@ -20,6 +23,7 @@ def test_clean_sensor_logic():
     assert processed_df.iloc[1]['voltage'] == 350
     
 # 2. Integration Test: tetsting the full pipeline with database connection and data insertion
+@pytest.mark.skipif(IN_GITHUB_ACTIONS, reason="Skipping DB connection test in GitHub Actions")
 def test_database_connection():
     try:
         engine = create_engine('postgresql://airflow:airflow@127.0.0.1:5434/sensor_db')
@@ -31,6 +35,7 @@ def test_database_connection():
     assert success is True
     
 # 3. Data Quality Test: checking if the cleaned data in the database meets quality criteria (no outliers, no missing values)
+@pytest.mark.skipif(IN_GITHUB_ACTIONS, reason="Skipping Data Quality test in GitHub Actions")
 def test_final_data_quality():
     engine = create_engine('postgresql://airflow:airflow@127.0.0.1:5434/sensor_db')
     try:
