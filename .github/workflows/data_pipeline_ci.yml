@@ -16,7 +16,7 @@ jobs:
         image: postgres:13
         env:
           POSTGRES_USER: airflow
-          POSTGRES_PASSWORD: airflow
+          POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
           POSTGRES_DB: sensor_db
         ports:
           - 5434:5432
